@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SportBet Pro - Demo Sports Betting Platform</title>
+    <title>BetPro - Ultimate Betting Platform</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -30,13 +30,31 @@
             min-height: 100vh;
         }
 
+        /* Payment Banner */
+        .payment-banner {
+            background: linear-gradient(90deg, #e74c3c, #f39c12);
+            padding: 10px 0;
+            text-align: center;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 101;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .payment-banner a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
         /* Header Styles */
         header {
             background: var(--dark);
             padding: 15px 0;
             box-shadow: var(--shadow);
             position: sticky;
-            top: 0;
+            top: 40px;
             z-index: 100;
         }
 
@@ -159,8 +177,8 @@
             opacity: 0.9;
         }
 
-        /* Sports Navigation */
-        .sports-nav {
+        /* Games Navigation */
+        .games-nav {
             display: flex;
             gap: 15px;
             margin-bottom: 30px;
@@ -168,7 +186,7 @@
             padding: 10px 0;
         }
 
-        .sport-tab {
+        .game-tab {
             background: rgba(255, 255, 255, 0.1);
             padding: 12px 25px;
             border-radius: 30px;
@@ -180,7 +198,7 @@
             gap: 8px;
         }
 
-        .sport-tab.active, .sport-tab:hover {
+        .game-tab.active, .game-tab:hover {
             background: var(--primary);
             color: white;
         }
@@ -295,6 +313,99 @@
             font-weight: bold;
         }
 
+        /* Casino Games */
+        .casino-games {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .game-image {
+            height: 150px;
+            background: linear-gradient(135deg, #3498db, #9b59b6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .game-info {
+            padding: 15px;
+        }
+
+        .game-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .game-desc {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+
+        /* Aviator Game */
+        .aviator-game {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: center;
+            border: 2px solid var(--accent);
+        }
+
+        .aviator-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .aviator-container {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .plane {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            transition: transform 0.5s;
+        }
+
+        .multiplier {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .aviator-controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
         /* Bet Slip */
         .bet-slip {
             background: var(--dark);
@@ -302,7 +413,7 @@
             padding: 20px;
             box-shadow: var(--shadow);
             position: sticky;
-            top: 80px;
+            top: 140px;
         }
 
         .bet-slip-title {
@@ -422,6 +533,7 @@
                 order: 3;
                 width: 100%;
                 justify-content: center;
+                flex-wrap: wrap;
             }
             
             .teams {
@@ -432,6 +544,10 @@
             .team, .team:last-child {
                 justify-content: center;
                 text-align: center;
+            }
+            
+            .aviator-controls {
+                flex-direction: column;
             }
         }
 
@@ -445,10 +561,24 @@
             .grid {
                 grid-template-columns: 1fr;
             }
+            
+            .bet-slip {
+                position: static;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Payment Banner -->
+    <div class="payment-banner">
+        <div class="container">
+            <a href="tel:0741212845">
+                <i class="fas fa-phone"></i> Contact: 0741212845 | 
+                <i class="fas fa-money-bill-wave"></i> All Payments via Send Money
+            </a>
+        </div>
+    </div>
+
     <!-- Demo Warning -->
     <div class="demo-warning">
         ⚠️ DEMO PLATFORM ONLY - NO REAL MONEY INVOLVED - FOR EDUCATIONAL PURPOSES
@@ -460,15 +590,15 @@
             <div class="header-content">
                 <div class="logo">
                     <i class="fas fa-trophy"></i>
-                    <div class="logo-text">SportBet Pro</div>
+                    <div class="logo-text">BetPro</div>
                 </div>
                 
                 <div class="nav-links">
                     <a href="#" class="active">Sports</a>
                     <a href="#">Live Betting</a>
+                    <a href="#">Casino</a>
                     <a href="#">Promotions</a>
                     <a href="#">Results</a>
-                    <a href="#">Statistics</a>
                 </div>
                 
                 <div class="user-actions">
@@ -486,36 +616,62 @@
     <div class="container main-content">
         <!-- Banner -->
         <div class="banner">
-            <h1>Welcome to SportBet Pro</h1>
-            <p>Demo Sports Betting Platform - Experience the thrill without the risk!</p>
+            <h1>Welcome to BetPro</h1>
+            <p>Your Ultimate Betting & Casino Platform - Experience the thrill without the risk!</p>
             <button class="btn btn-primary">How to Play</button>
         </div>
 
-        <!-- Sports Navigation -->
-        <div class="sports-nav">
-            <div class="sport-tab active">
+        <!-- Games Navigation -->
+        <div class="games-nav">
+            <div class="game-tab active">
                 <i class="fas fa-futbol"></i> Football
             </div>
-            <div class="sport-tab">
+            <div class="game-tab">
                 <i class="fas fa-basketball-ball"></i> Basketball
             </div>
-            <div class="sport-tab">
-                <i class="fas fa-baseball-ball"></i> Baseball
+            <div class="game-tab">
+                <i class="fas fa-dice"></i> Casino
             </div>
-            <div class="sport-tab">
-                <i class="fas fa-hockey-puck"></i> Hockey
+            <div class="game-tab">
+                <i class="fas fa-plane"></i> Aviator
             </div>
-            <div class="sport-tab">
+            <div class="game-tab">
                 <i class="fas fa-table-tennis"></i> Tennis
             </div>
-            <div class="sport-tab">
+            <div class="game-tab">
                 <i class="fas fa-flag-checkered"></i> Motorsports
+            </div>
+            <div class="game-tab">
+                <i class="fas fa-table"></i> Poker
+            </div>
+            <div class="game-tab">
+                <i class="fas fa-dice-d20"></i> Slots
             </div>
         </div>
 
         <div class="grid">
-            <!-- Left Column - Betting Markets -->
+            <!-- Left Column - Betting Markets & Games -->
             <div>
+                <!-- Aviator Game -->
+                <div class="aviator-game">
+                    <h2 class="aviator-title">
+                        <i class="fas fa-plane"></i> Aviator Game
+                    </h2>
+                    <div class="aviator-container">
+                        <div class="plane">✈️</div>
+                        <div class="multiplier" id="multiplier">1.00x</div>
+                        <div class="game-stats">
+                            <p>Place your bet and watch the plane fly!</p>
+                            <p>Cash out before it flies away to win!</p>
+                        </div>
+                    </div>
+                    <div class="aviator-controls">
+                        <input type="number" class="stake-input" placeholder="Bet Amount" value="10" min="1" id="aviatorBet">
+                        <button class="btn btn-primary" id="placeAviatorBet">Place Bet</button>
+                        <button class="btn btn-secondary" id="cashOut" disabled>Cash Out</button>
+                    </div>
+                </div>
+
                 <!-- Premier League Section -->
                 <div class="markets-section">
                     <h2 class="section-title">English Premier League</h2>
@@ -599,45 +755,52 @@
                     </div>
                 </div>
 
-                <!-- Champions League Section -->
+                <!-- Casino Games -->
                 <div class="markets-section">
-                    <h2 class="section-title">Champions League</h2>
+                    <h2 class="section-title">Popular Casino Games</h2>
                     
-                    <div class="match-card">
-                        <div class="match-header">
-                            <div class="teams">
-                                <div class="team">
-                                    <div class="team-logo">RMA</div>
-                                    <div class="team-name">Real Madrid</div>
-                                </div>
-                                <div class="vs">VS</div>
-                                <div class="team">
-                                    <div class="team-name">Bayern Munich</div>
-                                    <div class="team-logo">BAY</div>
-                                </div>
+                    <div class="casino-games">
+                        <div class="game-card">
+                            <div class="game-image">
+                                <i class="fas fa-dice"></i>
                             </div>
-                            <div class="match-time">Tomorrow 20:00</div>
+                            <div class="game-info">
+                                <h3 class="game-title">Lucky Dice</h3>
+                                <p class="game-desc">Roll the dice and win big with this classic casino game.</p>
+                                <button class="btn btn-primary" style="width: 100%;">Play Now</button>
+                            </div>
                         </div>
-                        <div class="bet-options">
-                            <div class="bet-option">
-                                <div class="bet-type">1</div>
-                                <div class="odds">2.30</div>
+                        
+                        <div class="game-card">
+                            <div class="game-image">
+                                <i class="fas fa-spinner"></i>
                             </div>
-                            <div class="bet-option">
-                                <div class="bet-type">X</div>
-                                <div class="odds">3.30</div>
+                            <div class="game-info">
+                                <h3 class="game-title">Wheel of Fortune</h3>
+                                <p class="game-desc">Spin the wheel for a chance to win amazing prizes.</p>
+                                <button class="btn btn-primary" style="width: 100%;">Play Now</button>
                             </div>
-                            <div class="bet-option">
-                                <div class="bet-type">2</div>
-                                <div class="odds">3.00</div>
+                        </div>
+                        
+                        <div class="game-card">
+                            <div class="game-image">
+                                <i class="fas fa-coins"></i>
                             </div>
-                            <div class="bet-option">
-                                <div class="bet-type">Over 2.5</div>
-                                <div class="odds">1.85</div>
+                            <div class="game-info">
+                                <h3 class="game-title">Gold Miner</h3>
+                                <p class="game-desc">Dig for gold and uncover hidden treasures.</p>
+                                <button class="btn btn-primary" style="width: 100%;">Play Now</button>
                             </div>
-                            <div class="bet-option">
-                                <div class="bet-type">BTTS</div>
-                                <div class="odds">1.60</div>
+                        </div>
+                        
+                        <div class="game-card">
+                            <div class="game-image">
+                                <i class="fas fa-cards"></i>
+                            </div>
+                            <div class="game-info">
+                                <h3 class="game-title">Poker Pro</h3>
+                                <p class="game-desc">Test your skills against players worldwide.</p>
+                                <button class="btn btn-primary" style="width: 100%;">Play Now</button>
                             </div>
                         </div>
                     </div>
@@ -663,6 +826,20 @@
                     </div>
                     <button class="btn btn-primary" style="width: 100%;" disabled>Place Bet</button>
                 </div>
+
+                <!-- Payment Info -->
+                <div class="bet-slip" style="margin-top: 20px; background: rgba(243, 156, 18, 0.2);">
+                    <h3 class="bet-slip-title">
+                        <i class="fas fa-money-bill-wave"></i> Payment Information
+                    </h3>
+                    <div style="text-align: center; padding: 15px;">
+                        <p><i class="fas fa-phone"></i> <strong>Contact: 0741212845</strong></p>
+                        <p style="margin-top: 10px;">All deposits and withdrawals are processed via Send Money</p>
+                        <button class="btn btn-primary" style="width: 100%; margin-top: 15px;">
+                            <i class="fas fa-comment"></i> Contact for Payments
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -672,8 +849,8 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>SportBet Pro</h3>
-                    <p>sports betting platform for earning purposes only. Real money transactions are processed on this website.</p>
+                    <h3>BetPro</h3>
+                    <p>Demo betting and casino platform for educational purposes only. No real money transactions are processed on this website.</p>
                 </div>
                 
                 <div class="footer-section">
@@ -687,12 +864,12 @@
                 </div>
                 
                 <div class="footer-section">
-                    <h3>Sports</h3>
+                    <h3>Games</h3>
                     <ul class="footer-links">
-                        <li><a href="#">Football</a></li>
-                        <li><a href="#">Basketball</a></li>
-                        <li><a href="#">Tennis</a></li>
-                        <li><a href="#">Baseball</a></li>
+                        <li><a href="#">Sports Betting</a></li>
+                        <li><a href="#">Aviator</a></li>
+                        <li><a href="#">Casino Games</a></li>
+                        <li><a href="#">Live Betting</a></li>
                     </ul>
                 </div>
                 
@@ -712,7 +889,7 @@
             </div>
             
             <div class="copyright">
-                &copy; 2023 SportBet Pro - Demo Platform. For Educational Purposes Only.
+                &copy; 2023 BetPro - Demo Platform. For Educational Purposes Only.
             </div>
         </div>
     </footer>
@@ -726,7 +903,17 @@
             const potentialWin = document.querySelector('.potential-win span');
             const placeBetBtn = document.querySelector('.bet-slip .btn');
             
+            // Aviator game elements
+            const aviatorBet = document.getElementById('aviatorBet');
+            const placeAviatorBet = document.getElementById('placeAviatorBet');
+            const cashOut = document.getElementById('cashOut');
+            const multiplier = document.getElementById('multiplier');
+            const plane = document.querySelector('.plane');
+            
             let bets = [];
+            let aviatorGameActive = false;
+            let currentMultiplier = 1.0;
+            let multiplierInterval;
             
             // Add bet to slip
             betOptions.forEach(option => {
@@ -838,15 +1025,74 @@
                 }
             });
             
-            // Sport tab switching
-            const sportTabs = document.querySelectorAll('.sport-tab');
-            sportTabs.forEach(tab => {
+            // Game tab switching
+            const gameTabs = document.querySelectorAll('.game-tab');
+            gameTabs.forEach(tab => {
                 tab.addEventListener('click', function() {
-                    sportTabs.forEach(t => t.classList.remove('active'));
+                    gameTabs.forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
-                    // In a real app, this would load different sports markets
+                    // In a real app, this would load different games/markets
                 });
             });
+            
+            // Aviator game functionality
+            placeAviatorBet.addEventListener('click', function() {
+                const betAmount = parseFloat(aviatorBet.value) || 0;
+                if (betAmount <= 0) {
+                    alert('Please enter a valid bet amount');
+                    return;
+                }
+                
+                if (aviatorGameActive) {
+                    alert('Aviator game is already in progress!');
+                    return;
+                }
+                
+                aviatorGameActive = true;
+                placeAviatorBet.disabled = true;
+                cashOut.disabled = false;
+                currentMultiplier = 1.0;
+                multiplier.textContent = currentMultiplier.toFixed(2) + 'x';
+                
+                // Start the multiplier increase
+                multiplierInterval = setInterval(function() {
+                    currentMultiplier += 0.01;
+                    multiplier.textContent = currentMultiplier.toFixed(2) + 'x';
+                    
+                    // Random crash point between 1.5x and 10x
+                    const crashPoint = 1.5 + Math.random() * 8.5;
+                    
+                    if (currentMultiplier >= crashPoint) {
+                        endAviatorGame(false);
+                    }
+                }, 100);
+            });
+            
+            cashOut.addEventListener('click', function() {
+                if (aviatorGameActive) {
+                    endAviatorGame(true);
+                }
+            });
+            
+            function endAviatorGame(didCashOut) {
+                clearInterval(multiplierInterval);
+                aviatorGameActive = false;
+                placeAviatorBet.disabled = false;
+                cashOut.disabled = true;
+                
+                const betAmount = parseFloat(aviatorBet.value) || 0;
+                
+                if (didCashOut) {
+                    const winAmount = (betAmount * currentMultiplier).toFixed(2);
+                    alert(`Congratulations! You cashed out at ${currentMultiplier.toFixed(2)}x and won $${winAmount}!`);
+                } else {
+                    alert(`The plane flew away at ${currentMultiplier.toFixed(2)}x! Better luck next time.`);
+                }
+                
+                // Reset multiplier
+                currentMultiplier = 1.0;
+                multiplier.textContent = currentMultiplier.toFixed(2) + 'x';
+            }
         });
     </script>
 </body>
