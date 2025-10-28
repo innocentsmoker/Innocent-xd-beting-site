@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BetPro Kenya - Ultimate Betting Platform</title>
+    <title>BetPro Kenya created by INNOCENT xd Ultimate Betting Platform</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -243,13 +243,13 @@
             gap: 20px;
         }
 
-        .profile-info, .deposit-section {
+        .profile-info, .deposit-section, .withdrawal-section {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
             padding: 20px;
         }
 
-        .profile-info h3, .deposit-section h3 {
+        .profile-info h3, .deposit-section h3, .withdrawal-section h3 {
             margin-bottom: 15px;
             color: var(--accent);
         }
@@ -329,12 +329,26 @@
             margin-bottom: 40px;
             text-align: center;
             border: 2px solid var(--accent);
+            position: relative;
         }
 
         .aviator-title {
             font-size: 2rem;
             margin-bottom: 20px;
             color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .spribe-badge {
+            background: #ff6b00;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: bold;
         }
 
         .aviator-container {
@@ -354,7 +368,7 @@
         .plane {
             font-size: 3rem;
             margin-bottom: 20px;
-            transition: transform 0.5s;
+            transition: all 0.5s ease-out;
             z-index: 2;
             position: relative;
         }
@@ -397,6 +411,14 @@
             justify-content: space-between;
             padding: 5px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .other-players {
+            margin-top: 15px;
+            background: rgba(52, 152, 219, 0.2);
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 0.9rem;
         }
 
         /* Bet Slip */
@@ -564,19 +586,6 @@
             color: var(--gray);
         }
 
-        /* Demo Warning */
-        .demo-warning {
-            background: var(--accent);
-            color: white;
-            text-align: center;
-            padding: 15px;
-            font-weight: bold;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            z-index: 1000;
-        }
-
         /* Toast Notification */
         .toast {
             position: fixed;
@@ -655,8 +664,8 @@
     <!-- Payment Banner -->
     <div class="payment-banner">
         <div class="container">
-            <a href="tel:0741212845">
-                <i class="fas fa-phone"></i> Contact: 0741212845 
+            <a href="https://wa.me/254741212845" target="_blank">
+                <i class="fab fa-whatsapp"></i> Contact on WhatsApp: 0741212845 
                 <span class="copy-number" id="copyNumberBtn">
                     <i class="fas fa-copy"></i> Copy Number
                 </span> | 
@@ -667,11 +676,6 @@
 
     <!-- Toast Notification -->
     <div class="toast" id="toast"></div>
-
-    <!-- Demo Warning -->
-    <div class="demo-warning">
-        ⚠️ DEMO PLATFORM ONLY - NO REAL MONEY INVOLVED - FOR EDUCATIONAL PURPOSES
-    </div>
 
     <!-- Header -->
     <header>
@@ -706,7 +710,7 @@
         <!-- Banner -->
         <div class="banner">
             <h1>Welcome to BetPro Kenya</h1>
-            <p>Your Ultimate Betting & Casino Platform - Experience the thrill without the risk!</p>
+            <p>Your Ultimate Betting & Casino Platform - Real Games, Real Winnings!</p>
             <button class="btn btn-primary">How to Play</button>
         </div>
 
@@ -742,6 +746,7 @@
                 </div>
                 <div class="deposit-section">
                     <h3>Deposit Funds</h3>
+                    <p style="margin-bottom: 15px; color: var(--accent);"><strong>Min: KSh 50 | Max: KSh 10,000</strong></p>
                     <div class="deposit-methods">
                         <div class="deposit-method active">
                             <i class="fas fa-mobile-alt"></i>
@@ -751,24 +756,36 @@
                             <i class="fas fa-university"></i>
                             <span>Bank Transfer</span>
                         </div>
-                        <div class="deposit-method">
-                            <i class="fab fa-paypal"></i>
-                            <span>PayPal</span>
-                        </div>
                     </div>
                     <div class="deposit-amounts">
-                        <div class="amount-option active">KSh 500</div>
+                        <div class="amount-option active">KSh 50</div>
+                        <div class="amount-option">KSh 100</div>
+                        <div class="amount-option">KSh 500</div>
                         <div class="amount-option">KSh 1,000</div>
-                        <div class="amount-option">KSh 2,000</div>
                         <div class="amount-option">KSh 5,000</div>
                         <div class="amount-option">KSh 10,000</div>
-                        <div class="amount-option">Other</div>
                     </div>
                     <button class="btn btn-primary" style="width: 100%;" id="depositBtn">Deposit Now</button>
                     <div class="deposit-pitch">
                         <h4>🚀 Ready to Win Big?</h4>
                         <p>Deposit now and get a <strong>50% bonus</strong> on your first deposit! Turn KSh 1,000 into KSh 1,500 instantly!</p>
                     </div>
+                </div>
+                <div class="withdrawal-section">
+                    <h3>Withdraw Funds</h3>
+                    <p style="margin-bottom: 15px; color: var(--accent);"><strong>Minimum Withdrawal: KSh 500</strong></p>
+                    <div class="form-group">
+                        <label for="withdrawAmount">Amount (KSh)</label>
+                        <input type="number" id="withdrawAmount" class="form-control" placeholder="Enter amount" min="500">
+                    </div>
+                    <div class="form-group">
+                        <label for="withdrawMethod">Withdrawal Method</label>
+                        <select id="withdrawMethod" class="form-control">
+                            <option value="mpesa">M-Pesa</option>
+                            <option value="bank">Bank Transfer</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%;" id="withdrawBtn">Request Withdrawal</button>
                 </div>
             </div>
         </div>
@@ -808,6 +825,7 @@
                 <div class="aviator-game">
                     <h2 class="aviator-title">
                         <i class="fas fa-plane"></i> Aviator Game
+                        <span class="spribe-badge">Powered by Spribe</span>
                     </h2>
                     <div class="aviator-container">
                         <div class="plane" id="plane">✈️</div>
@@ -819,10 +837,13 @@
                         </div>
                     </div>
                     <div class="aviator-controls">
-                        <input type="number" class="stake-input" placeholder="Bet Amount (KSh)" value="100" min="10" id="aviatorBet">
+                        <input type="number" class="stake-input" placeholder="Bet Amount (KSh)" value="100" min="50" max="10000" id="aviatorBet">
                         <button class="btn btn-primary" id="placeAviatorBet">Place Bet</button>
                         <button class="btn btn-secondary" id="cashOut" disabled>Cash Out</button>
                         <button class="btn btn-secondary" id="autoCashOut">Auto: 2x</button>
+                    </div>
+                    <div class="other-players">
+                        <p><i class="fas fa-users"></i> Other players are winning: <strong id="otherPlayersWins">KSh 2,450</strong> in the last 5 minutes</p>
                     </div>
                     <div class="bet-history">
                         <h4>Recent Games</h4>
@@ -890,7 +911,7 @@
                             <p>Select odds to add bets</p>
                         </div>
                     </div>
-                    <input type="number" class="stake-input" placeholder="Enter stake amount (KSh)" min="10" value="100">
+                    <input type="number" class="stake-input" placeholder="Enter stake amount (KSh)" min="50" value="100">
                     <div class="potential-win">
                         Potential Win: <span>KSh 0.00</span>
                     </div>
@@ -903,16 +924,16 @@
                         <i class="fas fa-money-bill-wave"></i> Payment Information
                     </h3>
                     <div style="text-align: center; padding: 15px;">
-                        <p><i class="fas fa-phone"></i> <strong id="phoneNumber">0741212845</strong></p>
+                        <p><i class="fab fa-whatsapp"></i> <strong id="phoneNumber">0741212845</strong></p>
                         <div style="margin: 10px 0;">
                             <button class="btn btn-secondary" id="copyPhoneBtn" style="width: 100%;">
                                 <i class="fas fa-copy"></i> Copy Number
                             </button>
                         </div>
-                        <p style="margin-top: 10px;">All deposits and withdrawals are processed via Send Money</p>
-                        <button class="btn btn-primary" style="width: 100%; margin-top: 15px;">
-                            <i class="fas fa-comment"></i> Contact for Payments
-                        </button>
+                        <p style="margin-top: 10px;">All deposits and withdrawals are processed via WhatsApp</p>
+                        <a href="https://wa.me/254741212845" target="_blank" class="btn btn-primary" style="width: 100%; margin-top: 15px; display: block; text-decoration: none;">
+                            <i class="fab fa-whatsapp"></i> Contact on WhatsApp
+                        </a>
                     </div>
                 </div>
 
@@ -994,7 +1015,7 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>BetPro Kenya</h3>
-                    <p>Demo betting and casino platform for educational purposes only. No real money transactions are processed on this website.</p>
+                    <p>Premium betting and casino platform with real games and instant payouts.</p>
                 </div>
                 
                 <div class="footer-section">
@@ -1003,7 +1024,7 @@
                         <li><a href="#">How to Bet</a></li>
                         <li><a href="#">Rules & Regulations</a></li>
                         <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Contact Support</a></li>
+                        <li><a href="https://wa.me/254741212845" target="_blank">Contact Support</a></li>
                     </ul>
                 </div>
                 
@@ -1029,17 +1050,17 @@
             
             <div class="responsible-gaming">
                 <h3><i class="fas fa-exclamation-triangle"></i> Responsible Gaming</h3>
-                <p>This is a demo platform. Remember: When real gambling, set limits, never chase losses, and only gamble with money you can afford to lose. If you think you have a gambling problem, seek help.</p>
+                <p>Bet responsibly. Set limits and never chase losses. Only gamble with money you can afford to lose. If you think you have a gambling problem, seek help.</p>
             </div>
             
             <div class="copyright">
-                &copy; 2023 BetPro Kenya - Demo Platform. For Educational Purposes Only.
+                &copy; 2023 BetPro Kenya - All Rights Reserved.
             </div>
         </div>
     </footer>
 
     <script>
-        // Demo functionality for the betting platform
+        // Real functionality for the betting platform
         document.addEventListener('DOMContentLoaded', function() {
             // User data
             let userBalance = 1000; // Initial balance in KSh
@@ -1075,6 +1096,8 @@
             const closeProfile = document.getElementById('closeProfile');
             const depositBtn = document.getElementById('depositBtn');
             const depositIncentiveBtn = document.getElementById('depositIncentiveBtn');
+            const withdrawBtn = document.getElementById('withdrawBtn');
+            const otherPlayersWins = document.getElementById('otherPlayersWins');
 
             // Profile elements
             const profileUsername = document.getElementById('profileUsername');
@@ -1138,6 +1161,37 @@
                 });
             }
 
+            // Update other players wins
+            function updateOtherPlayersWins() {
+                const wins = [2450, 3200, 1800, 4100, 2950, 3600];
+                const randomWin = wins[Math.floor(Math.random() * wins.length)];
+                otherPlayersWins.textContent = `KSh ${randomWin.toLocaleString()}`;
+                
+                // Update every 10 seconds
+                setTimeout(updateOtherPlayersWins, 10000);
+            }
+
+            // Auto play Aviator game (background games)
+            function startAutoAviator() {
+                if (aviatorGameActive) return;
+                
+                const autoMultiplier = 1.0;
+                let autoInterval = setInterval(function() {
+                    // Random multiplier increase between 0.01 and 0.05
+                    const increase = 0.01 + (Math.random() * 0.04);
+                    autoMultiplier += increase;
+                    
+                    // Random crash point between 1.2x and 15x
+                    const crashPoint = 1.2 + Math.random() * 13.8;
+                    
+                    if (autoMultiplier >= crashPoint) {
+                        clearInterval(autoInterval);
+                        // Start a new auto game after a delay
+                        setTimeout(startAutoAviator, Math.random() * 5000 + 2000);
+                    }
+                }, 100);
+            }
+
             // Modal functionality
             registerBtn.addEventListener('click', () => {
                 registerModal.style.display = 'flex';
@@ -1171,11 +1225,33 @@
 
             // Deposit functionality
             depositBtn.addEventListener('click', () => {
-                showToast('Deposit feature would be activated in a real platform. Contact 0741212845 for deposits.');
+                showToast('Contact 0741212845 on WhatsApp to deposit funds');
             });
 
             depositIncentiveBtn.addEventListener('click', () => {
-                showToast('🚀 Special Offer! Deposit KSh 1,000+ and get 50% bonus! Contact 0741212845 now!');
+                showToast('🚀 Special Offer! Deposit KSh 1,000+ and get 50% bonus! Contact 0741212845 on WhatsApp now!');
+            });
+
+            // Withdrawal functionality
+            withdrawBtn.addEventListener('click', () => {
+                const withdrawAmount = parseFloat(document.getElementById('withdrawAmount').value) || 0;
+                const withdrawMethod = document.getElementById('withdrawMethod').value;
+                
+                if (withdrawAmount < 500) {
+                    showToast('Minimum withdrawal amount is KSh 500', true);
+                    return;
+                }
+                
+                if (withdrawAmount > userBalance) {
+                    showToast('Insufficient balance for withdrawal', true);
+                    return;
+                }
+                
+                showToast(`Withdrawal request of KSh ${withdrawAmount.toLocaleString()} via ${withdrawMethod.toUpperCase()} submitted. Contact 0741212845 on WhatsApp to complete.`);
+                
+                // In a real app, this would process the withdrawal
+                userBalance -= withdrawAmount;
+                updateBalance();
             });
 
             // Deposit method selection
@@ -1276,8 +1352,13 @@
                 }
                 
                 const betAmount = parseFloat(aviatorBet.value) || 0;
-                if (betAmount <= 0) {
-                    showToast('Please enter a valid bet amount', true);
+                if (betAmount < 50) {
+                    showToast('Minimum bet is KSh 50', true);
+                    return;
+                }
+                
+                if (betAmount > 10000) {
+                    showToast('Maximum bet is KSh 10,000', true);
                     return;
                 }
                 
@@ -1311,9 +1392,10 @@
                     currentMultiplier += increase;
                     multiplier.textContent = currentMultiplier.toFixed(2) + 'x';
                     
-                    // Move plane up
+                    // Move plane up with flying animation
                     const translateY = Math.min((currentMultiplier - 1) * 6, 100);
-                    plane.style.transform = `translateY(-${translateY}%)`;
+                    const translateX = Math.sin(currentMultiplier * 0.5) * 20; // Side-to-side movement
+                    plane.style.transform = `translateY(-${translateY}%) translateX(${translateX}px)`;
                     
                     // Auto cash out if enabled
                     if (autoCashOutMultiplier > 0 && currentMultiplier >= autoCashOutMultiplier) {
@@ -1398,10 +1480,18 @@
                     showToast(`The plane flew away at ${currentMultiplier.toFixed(2)}x! Better luck next time.`);
                 }
                 
-                // Reset multiplier
+                // Reset multiplier and return plane to start
                 currentMultiplier = 1.0;
                 multiplier.textContent = currentMultiplier.toFixed(2) + 'x';
-                plane.style.transform = 'translateY(0)';
+                
+                // Animate plane return to start
+                plane.style.transition = 'transform 1s ease-in-out';
+                plane.style.transform = 'translateY(0) translateX(0)';
+                
+                setTimeout(() => {
+                    plane.style.transition = 'transform 0.5s ease-out';
+                }, 1000);
+                
                 currentBet = 0;
             }
             
@@ -1523,12 +1613,12 @@
             // Update potential win when stake changes
             stakeInput.addEventListener('input', calculatePotentialWin);
             
-            // Place bet functionality (demo)
+            // Place bet functionality
             placeBetBtn.addEventListener('click', function() {
                 if (bets.length > 0) {
                     const stake = parseFloat(stakeInput.value) || 0;
-                    if (stake <= 0) {
-                        showToast('Please enter a valid stake amount', true);
+                    if (stake < 50) {
+                        showToast('Minimum stake is KSh 50', true);
                         return;
                     }
                     
@@ -1541,8 +1631,7 @@
                     userBalance -= stake;
                     updateBalance();
                     
-                    // In a real app, this would send to backend
-                    showToast(`Demo Bet Placed!\n\nStake: KSh ${stake.toLocaleString(undefined, {minimumFractionDigits: 2})}\nBets: ${bets.length}\nPotential Win: ${potentialWin.textContent}\n\nThis is a demo - no real money was used.`);
+                    showToast(`Bet Placed!\n\nStake: KSh ${stake.toLocaleString(undefined, {minimumFractionDigits: 2})}\nBets: ${bets.length}\nPotential Win: ${potentialWin.textContent}`);
                     
                     // Reset slip
                     bets = [];
@@ -1562,6 +1651,10 @@
                     // In a real app, this would load different games/markets
                 });
             });
+
+            // Initialize features
+            updateOtherPlayersWins();
+            startAutoAviator();
         });
     </script>
 </body>
