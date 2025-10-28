@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BetPro - Ultimate Betting Platform</title>
+    <title>BetPro Kenya - Ultimate Betting Platform</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -46,6 +46,19 @@
             color: white;
             text-decoration: none;
             font-size: 1.1rem;
+        }
+
+        .copy-number {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .copy-number:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
 
         /* Header Styles */
@@ -385,12 +398,15 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
 
         .plane {
             font-size: 3rem;
             margin-bottom: 20px;
             transition: transform 0.5s;
+            z-index: 2;
         }
 
         .multiplier {
@@ -398,12 +414,29 @@
             font-weight: bold;
             color: var(--primary);
             margin-bottom: 20px;
+            z-index: 2;
         }
 
         .aviator-controls {
             display: flex;
             gap: 15px;
             justify-content: center;
+        }
+
+        .bet-history {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .bet-history-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         /* Bet Slip */
@@ -455,6 +488,68 @@
         .potential-win span {
             font-weight: bold;
             color: var(--primary);
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--dark);
+            border-radius: 15px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: var(--shadow);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid var(--gray);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
         }
 
         /* Footer */
@@ -522,6 +617,26 @@
             z-index: 1000;
         }
 
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: var(--shadow);
+            z-index: 1001;
+            display: none;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .header-content {
@@ -573,11 +688,17 @@
     <div class="payment-banner">
         <div class="container">
             <a href="tel:0741212845">
-                <i class="fas fa-phone"></i> Contact: 0741212845 | 
+                <i class="fas fa-phone"></i> Contact: 0741212845 
+                <span class="copy-number" id="copyNumberBtn">
+                    <i class="fas fa-copy"></i> Copy Number
+                </span> | 
                 <i class="fas fa-money-bill-wave"></i> All Payments via Send Money
             </a>
         </div>
     </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
 
     <!-- Demo Warning -->
     <div class="demo-warning">
@@ -590,7 +711,7 @@
             <div class="header-content">
                 <div class="logo">
                     <i class="fas fa-trophy"></i>
-                    <div class="logo-text">BetPro</div>
+                    <div class="logo-text">BetPro Kenya</div>
                 </div>
                 
                 <div class="nav-links">
@@ -603,10 +724,10 @@
                 
                 <div class="user-actions">
                     <div class="balance">
-                        <i class="fas fa-wallet"></i> Demo Balance: $1,000.00
+                        <i class="fas fa-wallet"></i> Balance: <span id="userBalance">KSh 1,000.00</span>
                     </div>
-                    <button class="btn btn-secondary">Login</button>
-                    <button class="btn btn-primary">Register</button>
+                    <button class="btn btn-secondary" id="loginBtn">Login</button>
+                    <button class="btn btn-primary" id="registerBtn">Register</button>
                 </div>
             </div>
         </div>
@@ -616,7 +737,7 @@
     <div class="container main-content">
         <!-- Banner -->
         <div class="banner">
-            <h1>Welcome to BetPro</h1>
+            <h1>Welcome to BetPro Kenya</h1>
             <p>Your Ultimate Betting & Casino Platform - Experience the thrill without the risk!</p>
             <button class="btn btn-primary">How to Play</button>
         </div>
@@ -658,7 +779,7 @@
                         <i class="fas fa-plane"></i> Aviator Game
                     </h2>
                     <div class="aviator-container">
-                        <div class="plane">✈️</div>
+                        <div class="plane" id="plane">✈️</div>
                         <div class="multiplier" id="multiplier">1.00x</div>
                         <div class="game-stats">
                             <p>Place your bet and watch the plane fly!</p>
@@ -666,9 +787,16 @@
                         </div>
                     </div>
                     <div class="aviator-controls">
-                        <input type="number" class="stake-input" placeholder="Bet Amount" value="10" min="1" id="aviatorBet">
+                        <input type="number" class="stake-input" placeholder="Bet Amount (KSh)" value="100" min="10" id="aviatorBet">
                         <button class="btn btn-primary" id="placeAviatorBet">Place Bet</button>
                         <button class="btn btn-secondary" id="cashOut" disabled>Cash Out</button>
+                        <button class="btn btn-secondary" id="autoCashOut">Auto: 2x</button>
+                    </div>
+                    <div class="bet-history">
+                        <h4>Recent Games</h4>
+                        <div id="betHistory">
+                            <!-- Bet history will be populated here -->
+                        </div>
                     </div>
                 </div>
 
@@ -820,9 +948,9 @@
                             <p>Select odds to add bets</p>
                         </div>
                     </div>
-                    <input type="number" class="stake-input" placeholder="Enter stake amount" min="1" value="10">
+                    <input type="number" class="stake-input" placeholder="Enter stake amount (KSh)" min="10" value="100">
                     <div class="potential-win">
-                        Potential Win: <span>$0.00</span>
+                        Potential Win: <span>KSh 0.00</span>
                     </div>
                     <button class="btn btn-primary" style="width: 100%;" disabled>Place Bet</button>
                 </div>
@@ -833,7 +961,12 @@
                         <i class="fas fa-money-bill-wave"></i> Payment Information
                     </h3>
                     <div style="text-align: center; padding: 15px;">
-                        <p><i class="fas fa-phone"></i> <strong>Contact: 0741212845</strong></p>
+                        <p><i class="fas fa-phone"></i> <strong id="phoneNumber">0741212845</strong></p>
+                        <div style="margin: 10px 0;">
+                            <button class="btn btn-secondary" id="copyPhoneBtn" style="width: 100%;">
+                                <i class="fas fa-copy"></i> Copy Number
+                            </button>
+                        </div>
                         <p style="margin-top: 10px;">All deposits and withdrawals are processed via Send Money</p>
                         <button class="btn btn-primary" style="width: 100%; margin-top: 15px;">
                             <i class="fas fa-comment"></i> Contact for Payments
@@ -844,12 +977,66 @@
         </div>
     </div>
 
+    <!-- Registration Modal -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create Account</h3>
+                <button class="close-modal" id="closeRegisterModal">&times;</button>
+            </div>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Login</h3>
+                <button class="close-modal" id="closeLoginModal">&times;</button>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginPhone">Phone Number</label>
+                    <input type="tel" id="loginPhone" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+            </form>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>BetPro</h3>
+                    <h3>BetPro Kenya</h3>
                     <p>Demo betting and casino platform for educational purposes only. No real money transactions are processed on this website.</p>
                 </div>
                 
@@ -889,7 +1076,7 @@
             </div>
             
             <div class="copyright">
-                &copy; 2023 BetPro - Demo Platform. For Educational Purposes Only.
+                &copy; 2023 BetPro Kenya - Demo Platform. For Educational Purposes Only.
             </div>
         </div>
     </footer>
@@ -897,27 +1084,306 @@
     <script>
         // Demo functionality for the betting platform
         document.addEventListener('DOMContentLoaded', function() {
+            // User data
+            let userBalance = 1000; // Initial balance in KSh
+            let isLoggedIn = false;
+            let aviatorGameActive = false;
+            let currentMultiplier = 1.0;
+            let multiplierInterval;
+            let currentBet = 0;
+            let autoCashOutMultiplier = 2.0;
+            let betHistory = [];
+
+            // DOM Elements
+            const userBalanceEl = document.getElementById('userBalance');
+            const registerBtn = document.getElementById('registerBtn');
+            const loginBtn = document.getElementById('loginBtn');
+            const registerModal = document.getElementById('registerModal');
+            const loginModal = document.getElementById('loginModal');
+            const closeRegisterModal = document.getElementById('closeRegisterModal');
+            const closeLoginModal = document.getElementById('closeLoginModal');
+            const registerForm = document.getElementById('registerForm');
+            const loginForm = document.getElementById('loginForm');
+            const toast = document.getElementById('toast');
+            const copyNumberBtn = document.getElementById('copyNumberBtn');
+            const copyPhoneBtn = document.getElementById('copyPhoneBtn');
+            const phoneNumberEl = document.getElementById('phoneNumber');
+
+            // Aviator game elements
+            const aviatorBet = document.getElementById('aviatorBet');
+            const placeAviatorBet = document.getElementById('placeAviatorBet');
+            const cashOut = document.getElementById('cashOut');
+            const autoCashOutBtn = document.getElementById('autoCashOut');
+            const multiplier = document.getElementById('multiplier');
+            const plane = document.getElementById('plane');
+            const betHistoryEl = document.getElementById('betHistory');
+
+            // Bet slip elements
             const betOptions = document.querySelectorAll('.bet-option');
             const betSlip = document.querySelector('.bet-slip-content');
             const stakeInput = document.querySelector('.stake-input');
             const potentialWin = document.querySelector('.potential-win span');
             const placeBetBtn = document.querySelector('.bet-slip .btn');
             
-            // Aviator game elements
-            const aviatorBet = document.getElementById('aviatorBet');
-            const placeAviatorBet = document.getElementById('placeAviatorBet');
-            const cashOut = document.getElementById('cashOut');
-            const multiplier = document.getElementById('multiplier');
-            const plane = document.querySelector('.plane');
-            
             let bets = [];
-            let aviatorGameActive = false;
-            let currentMultiplier = 1.0;
-            let multiplierInterval;
+
+            // Update balance display
+            function updateBalance() {
+                userBalanceEl.textContent = `KSh ${userBalance.toLocaleString()}`;
+            }
+
+            // Show toast notification
+            function showToast(message, isError = false) {
+                toast.textContent = message;
+                toast.style.background = isError ? 'var(--secondary)' : 'var(--primary)';
+                toast.style.display = 'block';
+                
+                setTimeout(() => {
+                    toast.style.display = 'none';
+                }, 3000);
+            }
+
+            // Copy phone number functionality
+            function copyPhoneNumber() {
+                navigator.clipboard.writeText('0741212845').then(() => {
+                    showToast('Phone number copied to clipboard!');
+                }).catch(err => {
+                    showToast('Failed to copy phone number', true);
+                });
+            }
+
+            // Modal functionality
+            registerBtn.addEventListener('click', () => {
+                registerModal.style.display = 'flex';
+            });
+
+            loginBtn.addEventListener('click', () => {
+                loginModal.style.display = 'flex';
+            });
+
+            closeRegisterModal.addEventListener('click', () => {
+                registerModal.style.display = 'none';
+            });
+
+            closeLoginModal.addEventListener('click', () => {
+                loginModal.style.display = 'none';
+            });
+
+            // Close modals when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === registerModal) {
+                    registerModal.style.display = 'none';
+                }
+                if (e.target === loginModal) {
+                    loginModal.style.display = 'none';
+                }
+            });
+
+            // Registration form
+            registerForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const fullName = document.getElementById('fullName').value;
+                const phone = document.getElementById('phone').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                if (password !== confirmPassword) {
+                    showToast('Passwords do not match!', true);
+                    return;
+                }
+                
+                // In a real app, this would send to backend
+                showToast(`Account created for ${fullName}!`);
+                registerModal.style.display = 'none';
+                registerForm.reset();
+                
+                // Auto login after registration
+                isLoggedIn = true;
+                loginBtn.textContent = 'Logout';
+                registerBtn.style.display = 'none';
+            });
+
+            // Login form
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const phone = document.getElementById('loginPhone').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                // In a real app, this would verify with backend
+                if (phone && password) {
+                    showToast('Login successful!');
+                    loginModal.style.display = 'none';
+                    loginForm.reset();
+                    
+                    isLoggedIn = true;
+                    loginBtn.textContent = 'Logout';
+                    registerBtn.style.display = 'none';
+                } else {
+                    showToast('Please enter phone and password', true);
+                }
+            });
+
+            // Logout functionality
+            loginBtn.addEventListener('click', function() {
+                if (isLoggedIn) {
+                    isLoggedIn = false;
+                    loginBtn.textContent = 'Login';
+                    registerBtn.style.display = 'block';
+                    showToast('Logged out successfully');
+                }
+            });
+
+            // Copy phone number buttons
+            copyNumberBtn.addEventListener('click', copyPhoneNumber);
+            copyPhoneBtn.addEventListener('click', copyPhoneNumber);
+
+            // Aviator game functionality
+            placeAviatorBet.addEventListener('click', function() {
+                if (!isLoggedIn) {
+                    showToast('Please login to play', true);
+                    return;
+                }
+                
+                const betAmount = parseFloat(aviatorBet.value) || 0;
+                if (betAmount <= 0) {
+                    showToast('Please enter a valid bet amount', true);
+                    return;
+                }
+                
+                if (betAmount > userBalance) {
+                    showToast('Insufficient balance', true);
+                    return;
+                }
+                
+                if (aviatorGameActive) {
+                    showToast('Aviator game is already in progress!', true);
+                    return;
+                }
+                
+                // Deduct bet amount from balance
+                userBalance -= betAmount;
+                updateBalance();
+                currentBet = betAmount;
+                
+                aviatorGameActive = true;
+                placeAviatorBet.disabled = true;
+                cashOut.disabled = false;
+                currentMultiplier = 1.0;
+                multiplier.textContent = currentMultiplier.toFixed(2) + 'x';
+                plane.style.transform = 'translateY(0)';
+                
+                // Start the multiplier increase
+                multiplierInterval = setInterval(function() {
+                    currentMultiplier += 0.01;
+                    multiplier.textContent = currentMultiplier.toFixed(2) + 'x';
+                    
+                    // Move plane up
+                    const translateY = Math.min((currentMultiplier - 1) * 10, 100);
+                    plane.style.transform = `translateY(-${translateY}%)`;
+                    
+                    // Auto cash out if enabled
+                    if (autoCashOutMultiplier > 0 && currentMultiplier >= autoCashOutMultiplier) {
+                        endAviatorGame(true);
+                    }
+                    
+                    // Random crash point between 1.1x and 10x
+                    const crashPoint = 1.1 + Math.random() * 8.9;
+                    
+                    if (currentMultiplier >= crashPoint) {
+                        endAviatorGame(false);
+                    }
+                }, 100);
+            });
             
-            // Add bet to slip
+            cashOut.addEventListener('click', function() {
+                if (aviatorGameActive) {
+                    endAviatorGame(true);
+                }
+            });
+            
+            autoCashOutBtn.addEventListener('click', function() {
+                if (autoCashOutMultiplier === 2.0) {
+                    autoCashOutMultiplier = 5.0;
+                    autoCashOutBtn.textContent = 'Auto: 5x';
+                } else if (autoCashOutMultiplier === 5.0) {
+                    autoCashOutMultiplier = 10.0;
+                    autoCashOutBtn.textContent = 'Auto: 10x';
+                } else {
+                    autoCashOutMultiplier = 2.0;
+                    autoCashOutBtn.textContent = 'Auto: 2x';
+                }
+            });
+            
+            function endAviatorGame(didCashOut) {
+                clearInterval(multiplierInterval);
+                aviatorGameActive = false;
+                placeAviatorBet.disabled = false;
+                cashOut.disabled = true;
+                
+                const winAmount = didCashOut ? (currentBet * currentMultiplier) : 0;
+                
+                // Add winnings to balance
+                userBalance += winAmount;
+                updateBalance();
+                
+                // Add to bet history
+                const historyItem = {
+                    multiplier: currentMultiplier.toFixed(2),
+                    bet: currentBet,
+                    win: winAmount,
+                    cashedOut: didCashOut,
+                    timestamp: new Date().toLocaleTimeString()
+                };
+                
+                betHistory.unshift(historyItem);
+                updateBetHistory();
+                
+                if (didCashOut) {
+                    showToast(`Congratulations! You cashed out at ${currentMultiplier.toFixed(2)}x and won KSh ${winAmount.toLocaleString()}!`);
+                } else {
+                    showToast(`The plane flew away at ${currentMultiplier.toFixed(2)}x! Better luck next time.`);
+                }
+                
+                // Reset multiplier
+                currentMultiplier = 1.0;
+                multiplier.textContent = currentMultiplier.toFixed(2) + 'x';
+                plane.style.transform = 'translateY(0)';
+                currentBet = 0;
+            }
+            
+            function updateBetHistory() {
+                betHistoryEl.innerHTML = '';
+                
+                // Show only last 5 bets
+                const recentBets = betHistory.slice(0, 5);
+                
+                recentBets.forEach(bet => {
+                    const item = document.createElement('div');
+                    item.className = 'bet-history-item';
+                    
+                    const resultClass = bet.cashedOut ? 'style="color: var(--primary)"' : 'style="color: var(--secondary)"';
+                    const resultText = bet.cashedOut ? 'CASH OUT' : 'CRASHED';
+                    
+                    item.innerHTML = `
+                        <div>${bet.timestamp}</div>
+                        <div ${resultClass}>${bet.multiplier}x (${resultText})</div>
+                    `;
+                    
+                    betHistoryEl.appendChild(item);
+                });
+            }
+
+            // Bet slip functionality
             betOptions.forEach(option => {
                 option.addEventListener('click', function() {
+                    if (!isLoggedIn) {
+                        showToast('Please login to place bets', true);
+                        return;
+                    }
+                    
                     const matchCard = this.closest('.match-card');
                     const teams = matchCard.querySelector('.teams').textContent.replace(/VS/g, 'vs').trim();
                     const betType = this.querySelector('.bet-type').textContent;
@@ -950,7 +1416,7 @@
                         </div>
                     `;
                     placeBetBtn.disabled = true;
-                    potentialWin.textContent = '$0.00';
+                    potentialWin.textContent = 'KSh 0.00';
                 } else {
                     let slipHTML = '';
                     bets.forEach((bet, index) => {
@@ -991,7 +1457,7 @@
                 if (bets.length === 1) {
                     // Single bet
                     const win = stake * bets[0].odds;
-                    potentialWin.textContent = '$' + win.toFixed(2);
+                    potentialWin.textContent = 'KSh ' + win.toLocaleString(undefined, {minimumFractionDigits: 2});
                 } else {
                     // Multiple bet (accumulator)
                     let totalOdds = 1;
@@ -999,7 +1465,7 @@
                         totalOdds *= bet.odds;
                     });
                     const win = stake * totalOdds;
-                    potentialWin.textContent = '$' + win.toFixed(2);
+                    potentialWin.textContent = 'KSh ' + win.toLocaleString(undefined, {minimumFractionDigits: 2});
                 }
             }
             
@@ -1011,17 +1477,26 @@
                 if (bets.length > 0) {
                     const stake = parseFloat(stakeInput.value) || 0;
                     if (stake <= 0) {
-                        alert('Please enter a valid stake amount');
+                        showToast('Please enter a valid stake amount', true);
                         return;
                     }
                     
+                    if (stake > userBalance) {
+                        showToast('Insufficient balance', true);
+                        return;
+                    }
+                    
+                    // Deduct stake from balance
+                    userBalance -= stake;
+                    updateBalance();
+                    
                     // In a real app, this would send to backend
-                    alert(`Demo Bet Placed!\n\nStake: $${stake.toFixed(2)}\nBets: ${bets.length}\nPotential Win: ${potentialWin.textContent}\n\nThis is a demo - no real money was used.`);
+                    showToast(`Demo Bet Placed!\n\nStake: KSh ${stake.toLocaleString(undefined, {minimumFractionDigits: 2})}\nBets: ${bets.length}\nPotential Win: ${potentialWin.textContent}\n\nThis is a demo - no real money was used.`);
                     
                     // Reset slip
                     bets = [];
                     updateBetSlip();
-                    stakeInput.value = '10';
+                    stakeInput.value = '100';
                 }
             });
             
@@ -1034,65 +1509,6 @@
                     // In a real app, this would load different games/markets
                 });
             });
-            
-            // Aviator game functionality
-            placeAviatorBet.addEventListener('click', function() {
-                const betAmount = parseFloat(aviatorBet.value) || 0;
-                if (betAmount <= 0) {
-                    alert('Please enter a valid bet amount');
-                    return;
-                }
-                
-                if (aviatorGameActive) {
-                    alert('Aviator game is already in progress!');
-                    return;
-                }
-                
-                aviatorGameActive = true;
-                placeAviatorBet.disabled = true;
-                cashOut.disabled = false;
-                currentMultiplier = 1.0;
-                multiplier.textContent = currentMultiplier.toFixed(2) + 'x';
-                
-                // Start the multiplier increase
-                multiplierInterval = setInterval(function() {
-                    currentMultiplier += 0.01;
-                    multiplier.textContent = currentMultiplier.toFixed(2) + 'x';
-                    
-                    // Random crash point between 1.5x and 10x
-                    const crashPoint = 1.5 + Math.random() * 8.5;
-                    
-                    if (currentMultiplier >= crashPoint) {
-                        endAviatorGame(false);
-                    }
-                }, 100);
-            });
-            
-            cashOut.addEventListener('click', function() {
-                if (aviatorGameActive) {
-                    endAviatorGame(true);
-                }
-            });
-            
-            function endAviatorGame(didCashOut) {
-                clearInterval(multiplierInterval);
-                aviatorGameActive = false;
-                placeAviatorBet.disabled = false;
-                cashOut.disabled = true;
-                
-                const betAmount = parseFloat(aviatorBet.value) || 0;
-                
-                if (didCashOut) {
-                    const winAmount = (betAmount * currentMultiplier).toFixed(2);
-                    alert(`Congratulations! You cashed out at ${currentMultiplier.toFixed(2)}x and won $${winAmount}!`);
-                } else {
-                    alert(`The plane flew away at ${currentMultiplier.toFixed(2)}x! Better luck next time.`);
-                }
-                
-                // Reset multiplier
-                currentMultiplier = 1.0;
-                multiplier.textContent = currentMultiplier.toFixed(2) + 'x';
-            }
         });
     </script>
 </body>
