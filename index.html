@@ -228,6 +228,42 @@
             position: relative;
         }
 
+        /* Signature Section */
+        .signature-section {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .signature {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+            }
+            to {
+                text-shadow: 0 0 15px rgba(255, 255, 255, 0.6), 0 0 20px rgba(255, 255, 255, 0.4);
+            }
+        }
+
+        .signature-subtitle {
+            font-size: 1rem;
+            color: var(--gray);
+            margin-top: 5px;
+        }
+
         /* Games Navigation - Green */
         .games-nav {
             display: flex;
@@ -855,6 +891,10 @@
             .bet-options {
                 grid-template-columns: 1fr;
             }
+            
+            .signature {
+                font-size: 2rem;
+            }
         }
 
         .grid {
@@ -927,6 +967,12 @@
             <h1>Welcome to BetPro Kenya</h1>
             <p>Your Ultimate Betting & Casino Platform - Sponsored by TEAM EXPLORE</p>
             <button class="btn btn-explore">Explore Games</button>
+        </div>
+
+        <!-- Signature Section -->
+        <div class="signature-section">
+            <div class="signature">INNOCENT XD</div>
+            <div class="signature-subtitle">Platform Creator & Developer</div>
         </div>
 
         <!-- Player Profile Section -->
@@ -1364,7 +1410,7 @@
             </div>
             
             <div class="copyright">
-                &copy; 2025 BetPro Kenya - Sponsored by TEAM EXPLORE - All Rights Reserved.
+                &copy; 2025 BetPro Kenya - Created by <span style="color: var(--accent);">INNOCENT XD</span> - Sponsored by TEAM EXPLORE - All Rights Reserved.
             </div>
         </div>
     </footer>
@@ -2044,226 +2090,4 @@
                 }
                 
                 if (gameLives.roulette > 0) {
-                    gameLives.roulette--;
-                    updateGameLives();
-                    
-                    // Simulate game outcome
-                    const win = Math.random() > 0.7;
-                    if (win) {
-                        const winAmount = Math.floor(Math.random() * 800) + 200;
-                        userBalance += winAmount;
-                        updateBalance();
-                        showToast(`Congratulations! You won KSh ${winAmount} on Roulette!`);
-                    } else {
-                        showToast('Better luck next time on Roulette!');
-                    }
-                    
-                    if (gameLives.roulette === 0) {
-                        showToast('You\'ve used all your Roulette lives! Lives will reset in 24 hours.');
-                    }
-                } else {
-                    showToast('No lives remaining for Roulette!', true);
-                }
-            });
-
-            virtualBlackjack.addEventListener('click', function() {
-                if (!isLoggedIn) {
-                    showToast('Please login to play virtual games', true);
-                    return;
-                }
-                
-                if (gameLives.blackjack > 0) {
-                    gameLives.blackjack--;
-                    updateGameLives();
-                    
-                    // Simulate game outcome
-                    const win = Math.random() > 0.65;
-                    if (win) {
-                        const winAmount = Math.floor(Math.random() * 600) + 150;
-                        userBalance += winAmount;
-                        updateBalance();
-                        showToast(`Congratulations! You won KSh ${winAmount} on Blackjack!`);
-                    } else {
-                        showToast('Better luck next time on Blackjack!');
-                    }
-                    
-                    if (gameLives.blackjack === 0) {
-                        showToast('You\'ve used all your Blackjack lives! Lives will reset in 24 hours.');
-                    }
-                } else {
-                    showToast('No lives remaining for Blackjack!', true);
-                }
-            });
-
-            virtualPoker.addEventListener('click', function() {
-                if (!isLoggedIn) {
-                    showToast('Please login to play virtual games', true);
-                    return;
-                }
-                
-                if (gameLives.poker > 0) {
-                    gameLives.poker--;
-                    updateGameLives();
-                    
-                    // Simulate game outcome
-                    const win = Math.random() > 0.75;
-                    if (win) {
-                        const winAmount = Math.floor(Math.random() * 1000) + 300;
-                        userBalance += winAmount;
-                        updateBalance();
-                        showToast(`Congratulations! You won KSh ${winAmount} on Video Poker!`);
-                    } else {
-                        showToast('Better luck next time on Video Poker!');
-                    }
-                    
-                    if (gameLives.poker === 0) {
-                        showToast('You\'ve used all your Video Poker lives! Lives will reset in 24 hours.');
-                    }
-                } else {
-                    showToast('No lives remaining for Video Poker!', true);
-                }
-            });
-
-            // Bet slip functionality
-            sportsBetOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    if (!isLoggedIn) {
-                        showToast('Please login to place bets', true);
-                        return;
-                    }
-                    
-                    const matchCard = this.closest('.match-card');
-                    const teams = matchCard.querySelector('.teams').textContent.replace(/VS/g, 'vs').trim();
-                    const betType = this.querySelector('.bet-type').textContent;
-                    const odds = parseFloat(this.querySelector('.odds').textContent);
-                    
-                    // Check if bet already exists
-                    const existingBet = bets.find(bet => 
-                        bet.teams === teams && bet.betType === betType);
-                    
-                    if (!existingBet) {
-                        bets.push({
-                            teams: teams,
-                            betType: betType,
-                            odds: odds
-                        });
-                        
-                        updateBetSlip();
-                    }
-                });
-            });
-            
-            // Update bet slip display
-            function updateBetSlip() {
-                if (bets.length === 0) {
-                    betSlip.innerHTML = `
-                        <div class="empty-slip">
-                            <i class="fas fa-shopping-cart" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5;"></i>
-                            <p>Your bet slip is empty</p>
-                            <p>Select odds to add bets</p>
-                        </div>
-                    `;
-                    placeBetBtn.disabled = true;
-                    potentialWin.textContent = 'KSh 0.00';
-                } else {
-                    let slipHTML = '';
-                    bets.forEach((bet, index) => {
-                        slipHTML += `
-                            <div class="bet-item" style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 5px; margin-bottom: 10px;">
-                                <div style="display: flex; justify-content: space-between;">
-                                    <div>
-                                        <div style="font-weight: bold;">${bet.teams}</div>
-                                        <div style="font-size: 0.9rem; opacity: 0.8;">${bet.betType} @ ${bet.odds}</div>
-                                    </div>
-                                    <button class="remove-bet" data-index="${index}" style="background: var(--secondary); color: white; border: none; border-radius: 50%; width: 25px; height: 25px; cursor: pointer;">×</button>
-                                </div>
-                            </div>
-                        `;
-                    });
-                    betSlip.innerHTML = slipHTML;
-                    placeBetBtn.disabled = false;
-                    
-                    // Add event listeners to remove buttons
-                    document.querySelectorAll('.remove-bet').forEach(btn => {
-                        btn.addEventListener('click', function() {
-                            const index = parseInt(this.getAttribute('data-index'));
-                            bets.splice(index, 1);
-                            updateBetSlip();
-                        });
-                    });
-                    
-                    calculatePotentialWin();
-                }
-            }
-            
-            // Calculate potential winnings
-            function calculatePotentialWin() {
-                if (bets.length === 0) return;
-                
-                const stake = parseFloat(stakeInput.value) || 0;
-                
-                if (bets.length === 1) {
-                    // Single bet
-                    const win = stake * bets[0].odds;
-                    potentialWin.textContent = 'KSh ' + win.toLocaleString(undefined, {minimumFractionDigits: 2});
-                } else {
-                    // Multiple bet (accumulator)
-                    let totalOdds = 1;
-                    bets.forEach(bet => {
-                        totalOdds *= bet.odds;
-                    });
-                    const win = stake * totalOdds;
-                    potentialWin.textContent = 'KSh ' + win.toLocaleString(undefined, {minimumFractionDigits: 2});
-                }
-            }
-            
-            // Update potential win when stake changes
-            stakeInput.addEventListener('input', calculatePotentialWin);
-            
-            // Place bet functionality
-            placeBetBtn.addEventListener('click', function() {
-                if (bets.length > 0) {
-                    const stake = parseFloat(stakeInput.value) || 0;
-                    if (stake < 50) {
-                        showToast('Minimum stake is KSh 50', true);
-                        return;
-                    }
-                    
-                    if (stake > userBalance) {
-                        showToast('Insufficient balance', true);
-                        return;
-                    }
-                    
-                    // Deduct stake from balance
-                    userBalance -= stake;
-                    updateBalance();
-                    
-                    showToast(`Bet Placed!\n\nStake: KSh ${stake.toLocaleString(undefined, {minimumFractionDigits: 2})}\nBets: ${bets.length}\nPotential Win: ${potentialWin.textContent}`);
-                    
-                    // Reset slip
-                    bets = [];
-                    updateBetSlip();
-                    stakeInput.value = '100';
-                }
-            });
-            
-            // Game tab switching
-            const gameTabs = document.querySelectorAll('.game-tab');
-            gameTabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    if (this.id === 'profileTab') return;
-                    
-                    gameTabs.forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-                    // In a real app, this would load different games/markets
-                });
-            });
-
-            // Initialize features
-            updateOtherPlayersWins();
-            updateGameLives();
-            startAutoRocket();
-        });
-    </script>
-</body>
-</html>
+                    gameLives.roulette
