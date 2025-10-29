@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BetPro Kenya - Created by INNOCENT xd $ Sponsored by TEAM EXPLORE | Ultimate Betting Platform</title>
+    <title>BetPro Kenya - Sponsored by TEAM EXPLORE | Ultimate Betting Platform</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -360,6 +360,19 @@
             margin-bottom: 10px;
         }
 
+        /* Automatic Deposit Section */
+        .auto-deposit-section {
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .auto-deposit-section h3 {
+            margin-bottom: 15px;
+            color: var(--explore-blue);
+        }
+
         /* Aviator Game - Red */
         .aviator-game {
             background: rgba(231, 76, 60, 0.1);
@@ -451,14 +464,15 @@
             100% { transform: translateX(calc(100vw + 100px)); }
         }
 
-        .plane {
+        .rocket {
             font-size: 3rem;
             margin-bottom: 20px;
             transition: all 0.5s ease-out;
             z-index: 2;
             position: relative;
-            color: #ff0000; /* Red plane */
+            color: #ff0000; /* Red rocket */
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            transform: rotate(45deg);
         }
 
         .money-bag {
@@ -483,6 +497,26 @@
             gap: 15px;
             justify-content: center;
             flex-wrap: wrap;
+        }
+
+        .bet-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .bet-option {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .bet-option:hover, .bet-option.active {
+            background: var(--primary);
         }
 
         .bet-history {
@@ -817,6 +851,10 @@
             .virtual-games {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             }
+            
+            .bet-options {
+                grid-template-columns: 1fr;
+            }
         }
 
         .grid {
@@ -873,7 +911,7 @@
                 
                 <div class="user-actions">
                     <div class="balance">
-                        <i class="fas fa-wallet"></i> Balance: <span id="userBalance">KSh 100.00</span>
+                        <i class="fas fa-wallet"></i> Balance: <span id="userBalance">KSh 0.00</span>
                     </div>
                     <button class="btn btn-secondary" id="loginBtn">Login</button>
                     <button class="btn btn-primary" id="registerBtn">Register</button>
@@ -943,6 +981,26 @@
                         <div class="amount-option">KSh 10,000</div>
                     </div>
                     <button class="btn btn-primary" style="width: 100%;" id="depositBtn">Deposit Now</button>
+                    
+                    <!-- Automatic Deposit Section -->
+                    <div class="auto-deposit-section">
+                        <h3><i class="fas fa-robot"></i> Automatic Deposit</h3>
+                        <div class="form-group">
+                            <label for="depositPhone">Phone Number</label>
+                            <input type="tel" id="depositPhone" class="form-control" placeholder="Enter your phone number">
+                        </div>
+                        <div class="form-group">
+                            <label for="depositAmount">Amount (KSh)</label>
+                            <input type="number" id="depositAmount" class="form-control" placeholder="Enter amount" min="20" max="10000">
+                        </div>
+                        <button class="btn btn-explore" style="width: 100%;" id="autoDepositBtn">
+                            <i class="fas fa-bolt"></i> Automatic Deposit
+                        </button>
+                        <p style="margin-top: 10px; font-size: 0.9rem; text-align: center;">
+                            You will receive a prompt on your phone to authorize the payment
+                        </p>
+                    </div>
+                    
                     <div class="deposit-pitch">
                         <h4>🚀 Ready to Win Big?</h4>
                         <p>Deposit now and get a <strong>50% bonus</strong> on your first deposit! Turn KSh 1,000 into KSh 1,500 instantly!</p>
@@ -979,7 +1037,7 @@
                 <i class="fas fa-dice"></i> Casino
             </div>
             <div class="game-tab">
-                <i class="fas fa-plane"></i> Aviator
+                <i class="fas fa-rocket"></i> Rocket
             </div>
             <div class="game-tab" id="profileTab">
                 <i class="fas fa-user"></i> Profile
@@ -998,10 +1056,10 @@
         <div class="grid">
             <!-- Left Column - Betting Markets & Games -->
             <div>
-                <!-- Aviator Game -->
+                <!-- Rocket Game -->
                 <div class="aviator-game">
                     <h2 class="aviator-title">
-                        <i class="fas fa-plane"></i> Aviator Game
+                        <i class="fas fa-rocket"></i> Rocket Game
                         <span class="spribe-badge">Powered by Spribe</span>
                     </h2>
                     <div class="aviator-container">
@@ -1010,17 +1068,26 @@
                             <div class="cloud cloud-2"></div>
                             <div class="cloud cloud-3"></div>
                         </div>
-                        <div class="plane" id="plane">✈️</div>
+                        <div class="rocket" id="rocket">🚀</div>
                         <div class="money-bag" id="moneyBag">💰</div>
                         <div class="multiplier" id="multiplier">1.00x</div>
                         <div class="game-stats">
-                            <p>Place your bet and watch the plane fly! Multipliers can reach up to 100x!</p>
+                            <p>Place your bet and watch the rocket fly! Multipliers can reach up to 100x!</p>
                             <p>Cash out before it flies away to win big!</p>
                         </div>
                     </div>
+                    
+                    <!-- 4 Bet Options -->
+                    <div class="bet-options">
+                        <div class="bet-option active" data-bet="50">KSh 50</div>
+                        <div class="bet-option" data-bet="100">KSh 100</div>
+                        <div class="bet-option" data-bet="200">KSh 200</div>
+                        <div class="bet-option" data-bet="500">KSh 500</div>
+                    </div>
+                    
                     <div class="aviator-controls">
-                        <input type="number" class="stake-input" placeholder="Bet Amount (KSh)" value="100" min="50" max="10000" id="aviatorBet">
-                        <button class="btn btn-primary" id="placeAviatorBet">Place Bet</button>
+                        <input type="number" class="stake-input" placeholder="Or enter custom amount" value="100" min="50" max="10000" id="rocketBet">
+                        <button class="btn btn-primary" id="placeRocketBet">Place Bet</button>
                         <button class="btn btn-secondary" id="cashOut" disabled>Cash Out</button>
                         <button class="btn btn-secondary" id="autoCashOut">Auto: 2x</button>
                     </div>
@@ -1270,7 +1337,7 @@
                     <h3>Games</h3>
                     <ul class="footer-links">
                         <li><a href="#">Sports Betting</a></li>
-                        <li><a href="#">Aviator</a></li>
+                        <li><a href="#">Rocket</a></li>
                         <li><a href="#">Casino Games</a></li>
                         <li><a href="#">Live Betting</a></li>
                     </ul>
@@ -1306,9 +1373,9 @@
         // Real functionality for the betting platform
         document.addEventListener('DOMContentLoaded', function() {
             // User data
-            let userBalance = 1000; // Initial balance in KSh
+            let userBalance = 0; // Zero initial balance
             let isLoggedIn = false;
-            let aviatorGameActive = false;
+            let rocketGameActive = false;
             let currentMultiplier = 1.0;
             let multiplierInterval;
             let currentBet = 0;
@@ -1352,6 +1419,11 @@
             const withdrawBtn = document.getElementById('withdrawBtn');
             const otherPlayersWins = document.getElementById('otherPlayersWins');
 
+            // Automatic deposit elements
+            const autoDepositBtn = document.getElementById('autoDepositBtn');
+            const depositPhone = document.getElementById('depositPhone');
+            const depositAmount = document.getElementById('depositAmount');
+
             // Profile elements
             const profileUsername = document.getElementById('profileUsername');
             const memberSince = document.getElementById('memberSince');
@@ -1359,17 +1431,18 @@
             const gamesPlayed = document.getElementById('gamesPlayed');
             const winRate = document.getElementById('winRate');
 
-            // Aviator game elements
-            const aviatorBet = document.getElementById('aviatorBet');
-            const placeAviatorBet = document.getElementById('placeAviatorBet');
+            // Rocket game elements
+            const rocketBet = document.getElementById('rocketBet');
+            const placeRocketBet = document.getElementById('placeRocketBet');
             const cashOut = document.getElementById('cashOut');
             const autoCashOutBtn = document.getElementById('autoCashOut');
             const multiplier = document.getElementById('multiplier');
-            const plane = document.getElementById('plane');
+            const rocket = document.getElementById('rocket');
             const moneyBag = document.getElementById('moneyBag');
             const betHistoryEl = document.getElementById('betHistory');
             const autoBetOn = document.getElementById('autoBetOn');
             const autoCashOn = document.getElementById('autoCashOn');
+            const betOptions = document.querySelectorAll('.bet-options .bet-option');
 
             // Virtual games elements
             const virtualSlot = document.getElementById('virtualSlot');
@@ -1378,7 +1451,7 @@
             const virtualPoker = document.getElementById('virtualPoker');
 
             // Bet slip elements
-            const betOptions = document.querySelectorAll('.bet-option');
+            const sportsBetOptions = document.querySelectorAll('.markets-section .bet-option');
             const betSlip = document.querySelector('.bet-slip-content');
             const stakeInput = document.querySelector('.stake-input');
             const potentialWin = document.querySelector('.potential-win span');
@@ -1386,9 +1459,9 @@
             
             let bets = [];
 
-            // Audio element for aviator game
-            const aviatorAudio = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==');
-            aviatorAudio.loop = true;
+            // Audio element for rocket game
+            const rocketAudio = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==');
+            rocketAudio.loop = true;
 
             // Update balance display
             function updateBalance() {
@@ -1479,20 +1552,59 @@
                 });
             }
 
-            // Start Aviator game with random multiplier between 1.00 and 100.00
-            function startAviatorGame() {
-                if (aviatorGameActive) return;
+            // Automatic deposit functionality
+            autoDepositBtn.addEventListener('click', function() {
+                const phone = depositPhone.value.trim();
+                const amount = parseFloat(depositAmount.value) || 0;
                 
-                aviatorGameActive = true;
-                placeAviatorBet.disabled = true;
+                if (!phone) {
+                    showToast('Please enter your phone number', true);
+                    return;
+                }
+                
+                if (amount < 20) {
+                    showToast('Minimum deposit is KSh 20', true);
+                    return;
+                }
+                
+                if (amount > 10000) {
+                    showToast('Maximum deposit is KSh 10,000', true);
+                    return;
+                }
+                
+                // Simulate sending payment request
+                showToast(`Payment request sent to ${phone}. Check your phone to authorize KSh ${amount} payment.`);
+                
+                // Simulate successful payment after 3 seconds
+                setTimeout(() => {
+                    userBalance += amount;
+                    updateBalance();
+                    showToast(`Success! KSh ${amount} deposited to your account.`);
+                    
+                    // Add 50% bonus for first deposit
+                    if (playerStats.gamesPlayed === 0) {
+                        const bonus = amount * 0.5;
+                        userBalance += bonus;
+                        updateBalance();
+                        showToast(`🎉 Welcome bonus! You received KSh ${bonus} extra!`);
+                    }
+                }, 3000);
+            });
+
+            // Start Rocket game with random multiplier between 1.00 and 100.00
+            function startRocketGame() {
+                if (rocketGameActive) return;
+                
+                rocketGameActive = true;
+                placeRocketBet.disabled = true;
                 cashOut.disabled = false;
                 currentMultiplier = 1.0;
                 multiplier.textContent = currentMultiplier.toFixed(2) + 'x';
-                plane.style.transform = 'translateY(0)';
+                rocket.style.transform = 'translateY(0) rotate(45deg)';
                 moneyBag.style.opacity = '0';
                 
-                // Play aviator audio
-                aviatorAudio.play().catch(e => console.log("Audio play failed:", e));
+                // Play rocket audio
+                rocketAudio.play().catch(e => console.log("Audio play failed:", e));
                 
                 // Start the multiplier increase
                 multiplierInterval = setInterval(function() {
@@ -1501,34 +1613,34 @@
                     currentMultiplier += increase;
                     multiplier.textContent = currentMultiplier.toFixed(2) + 'x';
                     
-                    // Move plane up with flying animation - up to 100x
+                    // Move rocket up with flying animation - up to 100x
                     const translateY = Math.min((currentMultiplier - 1) * 1.5, 150);
                     const translateX = Math.sin(currentMultiplier * 0.5) * 20; // Side-to-side movement
-                    plane.style.transform = `translateY(-${translateY}%) translateX(${translateX}px)`;
+                    rocket.style.transform = `translateY(-${translateY}%) translateX(${translateX}px) rotate(45deg)`;
                     
                     // Auto cash out if enabled
                     if (autoCashEnabled && autoCashOutMultiplier > 0 && currentMultiplier >= autoCashOutMultiplier) {
-                        endAviatorGame(true);
+                        endRocketGame(true);
                     }
                     
                     // Random crash point between 1.2x and 100x
                     const crashPoint = 1.2 + Math.random() * 98.8;
                     
                     if (currentMultiplier >= crashPoint) {
-                        endAviatorGame(false);
+                        endRocketGame(false);
                     }
                 }, 100);
             }
             
-            function endAviatorGame(didCashOut) {
+            function endRocketGame(didCashOut) {
                 clearInterval(multiplierInterval);
-                aviatorGameActive = false;
-                placeAviatorBet.disabled = false;
+                rocketGameActive = false;
+                placeRocketBet.disabled = false;
                 cashOut.disabled = true;
                 
-                // Stop aviator audio
-                aviatorAudio.pause();
-                aviatorAudio.currentTime = 0;
+                // Stop rocket audio
+                rocketAudio.pause();
+                rocketAudio.currentTime = 0;
                 
                 const winAmount = didCashOut ? (currentBet * currentMultiplier) : 0;
                 
@@ -1559,42 +1671,42 @@
                 if (didCashOut) {
                     showToast(`Congratulations! You cashed out at ${currentMultiplier.toFixed(2)}x and won KSh ${winAmount.toLocaleString()}!`);
                 } else {
-                    showToast(`The plane flew away at ${currentMultiplier.toFixed(2)}x! Better luck next time.`);
+                    showToast(`The rocket flew away at ${currentMultiplier.toFixed(2)}x! Better luck next time.`);
                 }
                 
-                // Reset multiplier and return plane to start
+                // Reset multiplier and return rocket to start
                 currentMultiplier = 1.0;
                 multiplier.textContent = currentMultiplier.toFixed(2) + 'x';
                 
-                // Animate plane return to start
-                plane.style.transition = 'transform 1s ease-in-out';
-                plane.style.transform = 'translateY(0) translateX(0)';
+                // Animate rocket return to start
+                rocket.style.transition = 'transform 1s ease-in-out';
+                rocket.style.transform = 'translateY(0) translateX(0) rotate(45deg)';
                 
                 setTimeout(() => {
-                    plane.style.transition = 'transform 0.5s ease-out';
+                    rocket.style.transition = 'transform 0.5s ease-out';
                 }, 1000);
                 
                 currentBet = 0;
                 
                 // Auto bet if enabled
-                if (autoBetEnabled && !aviatorGameActive) {
+                if (autoBetEnabled && !rocketGameActive) {
                     setTimeout(() => {
-                        if (autoBetEnabled && !aviatorGameActive) {
-                            const betAmount = parseFloat(aviatorBet.value) || 0;
+                        if (autoBetEnabled && !rocketGameActive) {
+                            const betAmount = parseFloat(rocketBet.value) || 0;
                             if (betAmount >= 50 && betAmount <= 10000 && betAmount <= userBalance) {
                                 userBalance -= betAmount;
                                 updateBalance();
                                 currentBet = betAmount;
-                                startAviatorGame();
+                                startRocketGame();
                             }
                         }
                     }, 5000);
                 }
             }
 
-            // Auto play Aviator game (background games)
-            function startAutoAviator() {
-                if (aviatorGameActive) return;
+            // Auto play Rocket game (background games)
+            function startAutoRocket() {
+                if (rocketGameActive) return;
                 
                 const autoMultiplier = 1.0;
                 let autoInterval = setInterval(function() {
@@ -1608,7 +1720,7 @@
                     if (autoMultiplier >= crashPoint) {
                         clearInterval(autoInterval);
                         // Start a new auto game after a delay
-                        setTimeout(startAutoAviator, Math.random() * 5000 + 2000);
+                        setTimeout(startAutoRocket, Math.random() * 5000 + 2000);
                     }
                 }, 100);
             }
@@ -1765,14 +1877,27 @@
             copyNumberBtn.addEventListener('click', copyPhoneNumber);
             copyPhoneBtn.addEventListener('click', copyPhoneNumber);
 
-            // Aviator game functionality
-            placeAviatorBet.addEventListener('click', function() {
+            // Rocket game bet options
+            betOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove active class from all options
+                    betOptions.forEach(opt => opt.classList.remove('active'));
+                    // Add active class to clicked option
+                    this.classList.add('active');
+                    // Set the bet amount
+                    const betAmount = parseInt(this.getAttribute('data-bet'));
+                    rocketBet.value = betAmount;
+                });
+            });
+
+            // Rocket game functionality
+            placeRocketBet.addEventListener('click', function() {
                 if (!isLoggedIn) {
                     showToast('Please login to play', true);
                     return;
                 }
                 
-                const betAmount = parseFloat(aviatorBet.value) || 0;
+                const betAmount = parseFloat(rocketBet.value) || 0;
                 if (betAmount < 50) {
                     showToast('Minimum bet is KSh 50', true);
                     return;
@@ -1788,8 +1913,8 @@
                     return;
                 }
                 
-                if (aviatorGameActive) {
-                    showToast('Aviator game is already in progress!', true);
+                if (rocketGameActive) {
+                    showToast('Rocket game is already in progress!', true);
                     return;
                 }
                 
@@ -1798,11 +1923,11 @@
                 updateBalance();
                 currentBet = betAmount;
                 
-                startAviatorGame();
+                startRocketGame();
             });
             
             cashOut.addEventListener('click', function() {
-                if (aviatorGameActive) {
+                if (rocketGameActive) {
                     // Show money bag animation
                     moneyBag.style.opacity = '1';
                     moneyBag.style.top = '0';
@@ -1814,7 +1939,7 @@
                     }, 500);
                     
                     setTimeout(() => {
-                        endAviatorGame(true);
+                        endRocketGame(true);
                     }, 800);
                 }
             });
@@ -2000,7 +2125,7 @@
             });
 
             // Bet slip functionality
-            betOptions.forEach(option => {
+            sportsBetOptions.forEach(option => {
                 option.addEventListener('click', function() {
                     if (!isLoggedIn) {
                         showToast('Please login to place bets', true);
@@ -2137,7 +2262,7 @@
             // Initialize features
             updateOtherPlayersWins();
             updateGameLives();
-            startAutoAviator();
+            startAutoRocket();
         });
     </script>
 </body>
