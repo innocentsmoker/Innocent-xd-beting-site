@@ -14,16 +14,16 @@
         }
 
         :root {
-            --primary: #2ecc71;
+            --primary: #2ecc71; /* Green */
             --primary-dark: #27ae60;
-            --secondary: #e74c3c;
-            --accent: #f39c12;
+            --secondary: #e74c3c; /* Red */
+            --accent: #f39c12; /* Gold */
             --dark: #2c3e50;
             --light: #ecf0f1;
             --gray: #95a5a6;
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --explore-blue: #3498db;
-            --explore-dark: #2980b9;
+            --explore-blue: #3498db; /* Blue */
+            --pink: #e84393; /* Pink */
         }
 
         body {
@@ -32,9 +32,9 @@
             min-height: 100vh;
         }
 
-        /* Payment Banner */
+        /* Payment Banner - Blue */
         .payment-banner {
-            background: linear-gradient(90deg, var(--explore-blue), var(--explore-dark));
+            background: linear-gradient(90deg, var(--explore-blue), #2980b9);
             padding: 10px 0;
             text-align: center;
             font-weight: bold;
@@ -63,7 +63,7 @@
             background: rgba(255, 255, 255, 0.3);
         }
 
-        /* Header Styles */
+        /* Header Styles - Dark Blue */
         header {
             background: var(--dark);
             padding: 15px 0;
@@ -176,7 +176,7 @@
         }
 
         .btn-explore:hover {
-            background: var(--explore-dark);
+            background: #2980b9;
             transform: translateY(-2px);
         }
 
@@ -192,8 +192,9 @@
             padding: 30px 0;
         }
 
+        /* Banner - Blue */
         .banner {
-            background: linear-gradient(135deg, var(--explore-blue), var(--explore-dark));
+            background: linear-gradient(135deg, var(--explore-blue), #2980b9);
             padding: 40px;
             border-radius: 15px;
             text-align: center;
@@ -227,7 +228,7 @@
             position: relative;
         }
 
-        /* Games Navigation */
+        /* Games Navigation - Green */
         .games-nav {
             display: flex;
             gap: 15px;
@@ -253,13 +254,14 @@
             color: white;
         }
 
-        /* Player Profile Section */
+        /* Player Profile Section - Pink */
         .profile-section {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(231, 67, 147, 0.1);
             border-radius: 15px;
             padding: 25px;
             margin-bottom: 30px;
             box-shadow: var(--shadow);
+            border: 1px solid rgba(231, 67, 147, 0.3);
         }
 
         .profile-header {
@@ -271,7 +273,7 @@
 
         .profile-title {
             font-size: 1.5rem;
-            color: var(--primary);
+            color: var(--pink);
         }
 
         .profile-content {
@@ -358,21 +360,22 @@
             margin-bottom: 10px;
         }
 
-        /* Aviator Game */
+        /* Aviator Game - Red */
         .aviator-game {
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(231, 76, 60, 0.1);
             border-radius: 15px;
             padding: 30px;
             margin-bottom: 40px;
             text-align: center;
-            border: 2px solid var(--accent);
+            border: 2px solid var(--secondary);
             position: relative;
+            overflow: hidden;
         }
 
         .aviator-title {
             font-size: 2rem;
             margin-bottom: 20px;
-            color: var(--accent);
+            color: var(--secondary);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -402,17 +405,60 @@
             overflow: hidden;
         }
 
+        .aviator-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.3;
+        }
+
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: float linear infinite;
+        }
+
+        .cloud-1 {
+            width: 60px;
+            height: 30px;
+            top: 20%;
+            left: 10%;
+            animation-duration: 30s;
+        }
+
+        .cloud-2 {
+            width: 80px;
+            height: 40px;
+            top: 40%;
+            left: 30%;
+            animation-duration: 40s;
+        }
+
+        .cloud-3 {
+            width: 50px;
+            height: 25px;
+            top: 60%;
+            left: 60%;
+            animation-duration: 35s;
+        }
+
+        @keyframes float {
+            0% { transform: translateX(-100px); }
+            100% { transform: translateX(calc(100vw + 100px)); }
+        }
+
         .plane {
             font-size: 3rem;
             margin-bottom: 20px;
             transition: all 0.5s ease-out;
             z-index: 2;
             position: relative;
-            filter: hue-rotate(0deg);
-        }
-
-        .red-plane {
-            filter: hue-rotate(300deg) saturate(2);
+            color: #ff0000; /* Red plane */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .money-bag {
@@ -463,7 +509,29 @@
             font-size: 0.9rem;
         }
 
-        /* Virtual Games Section */
+        /* Auto Controls */
+        .auto-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .auto-control {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .auto-control.active {
+            background: var(--primary);
+        }
+
+        /* Virtual Games Section - Gold */
         .virtual-games {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -472,18 +540,19 @@
         }
 
         .virtual-game-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(243, 156, 18, 0.1);
             border-radius: 10px;
             padding: 20px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
             box-shadow: var(--shadow);
+            border: 1px solid rgba(243, 156, 18, 0.3);
         }
 
         .virtual-game-card:hover {
             transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(243, 156, 18, 0.2);
         }
 
         .virtual-game-icon {
@@ -497,14 +566,33 @@
             margin-bottom: 10px;
         }
 
-        /* Bet Slip */
+        .game-lives {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .life {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+
+        .life.lost {
+            background: var(--secondary);
+        }
+
+        /* Bet Slip - Green */
         .bet-slip {
-            background: var(--dark);
+            background: rgba(46, 204, 113, 0.1);
             border-radius: 10px;
             padding: 20px;
             box-shadow: var(--shadow);
             position: sticky;
             top: 140px;
+            border: 1px solid rgba(46, 204, 113, 0.3);
         }
 
         .bet-slip-title {
@@ -610,7 +698,7 @@
             color: white;
         }
 
-        /* Footer */
+        /* Footer - Blue */
         footer {
             background: var(--dark);
             padding: 40px 0 20px;
@@ -917,11 +1005,16 @@
                         <span class="spribe-badge">Powered by Spribe</span>
                     </h2>
                     <div class="aviator-container">
-                        <div class="plane red-plane" id="plane">✈️</div>
+                        <div class="aviator-background">
+                            <div class="cloud cloud-1"></div>
+                            <div class="cloud cloud-2"></div>
+                            <div class="cloud cloud-3"></div>
+                        </div>
+                        <div class="plane" id="plane">✈️</div>
                         <div class="money-bag" id="moneyBag">💰</div>
                         <div class="multiplier" id="multiplier">1.00x</div>
                         <div class="game-stats">
-                            <p>Place your bet and watch the plane fly! Multipliers can reach up to 101x!</p>
+                            <p>Place your bet and watch the plane fly! Multipliers can reach up to 100x!</p>
                             <p>Cash out before it flies away to win big!</p>
                         </div>
                     </div>
@@ -930,6 +1023,10 @@
                         <button class="btn btn-primary" id="placeAviatorBet">Place Bet</button>
                         <button class="btn btn-secondary" id="cashOut" disabled>Cash Out</button>
                         <button class="btn btn-secondary" id="autoCashOut">Auto: 2x</button>
+                    </div>
+                    <div class="auto-controls">
+                        <div class="auto-control" id="autoBetOn">Auto Bet: OFF</div>
+                        <div class="auto-control" id="autoCashOn">Auto Cash: OFF</div>
                     </div>
                     <div class="other-players">
                         <p><i class="fas fa-users"></i> Other players are winning: <strong id="otherPlayersWins">KSh 2,450</strong> in the last 5 minutes</p>
@@ -950,6 +1047,11 @@
                         </div>
                         <div class="virtual-game-title">Lucky Slots</div>
                         <p>Spin to win big jackpots!</p>
+                        <div class="game-lives">
+                            <div class="life"></div>
+                            <div class="life"></div>
+                            <div class="life"></div>
+                        </div>
                     </div>
                     <div class="virtual-game-card" id="virtualRoulette">
                         <div class="virtual-game-icon">
@@ -957,6 +1059,11 @@
                         </div>
                         <div class="virtual-game-title">Roulette</div>
                         <p>Classic casino favorite</p>
+                        <div class="game-lives">
+                            <div class="life"></div>
+                            <div class="life"></div>
+                            <div class="life"></div>
+                        </div>
                     </div>
                     <div class="virtual-game-card" id="virtualBlackjack">
                         <div class="virtual-game-icon">
@@ -964,6 +1071,11 @@
                         </div>
                         <div class="virtual-game-title">Blackjack</div>
                         <p>Beat the dealer to 21</p>
+                        <div class="game-lives">
+                            <div class="life"></div>
+                            <div class="life"></div>
+                            <div class="life"></div>
+                        </div>
                     </div>
                     <div class="virtual-game-card" id="virtualPoker">
                         <div class="virtual-game-icon">
@@ -971,6 +1083,11 @@
                         </div>
                         <div class="virtual-game-title">Video Poker</div>
                         <p>Test your poker skills</p>
+                        <div class="game-lives">
+                            <div class="life"></div>
+                            <div class="life"></div>
+                            <div class="life"></div>
+                        </div>
                     </div>
                 </div>
 
@@ -1196,11 +1313,21 @@
             let multiplierInterval;
             let currentBet = 0;
             let autoCashOutMultiplier = 2.0;
+            let autoBetEnabled = false;
+            let autoCashEnabled = false;
             let betHistory = [];
             let playerStats = {
                 totalWinnings: 0,
                 gamesPlayed: 0,
                 wins: 0
+            };
+
+            // Virtual games lives
+            let gameLives = {
+                slot: 3,
+                roulette: 3,
+                blackjack: 3,
+                poker: 3
             };
 
             // DOM Elements
@@ -1241,6 +1368,8 @@
             const plane = document.getElementById('plane');
             const moneyBag = document.getElementById('moneyBag');
             const betHistoryEl = document.getElementById('betHistory');
+            const autoBetOn = document.getElementById('autoBetOn');
+            const autoCashOn = document.getElementById('autoCashOn');
 
             // Virtual games elements
             const virtualSlot = document.getElementById('virtualSlot');
@@ -1307,7 +1436,50 @@
                 setTimeout(updateOtherPlayersWins, 10000);
             }
 
-            // Start Aviator game with random multiplier between 1.00 and 101.00
+            // Update game lives display
+            function updateGameLives() {
+                // Update slot lives
+                const slotLives = virtualSlot.querySelectorAll('.life');
+                slotLives.forEach((life, index) => {
+                    if (index < gameLives.slot) {
+                        life.classList.remove('lost');
+                    } else {
+                        life.classList.add('lost');
+                    }
+                });
+
+                // Update roulette lives
+                const rouletteLives = virtualRoulette.querySelectorAll('.life');
+                rouletteLives.forEach((life, index) => {
+                    if (index < gameLives.roulette) {
+                        life.classList.remove('lost');
+                    } else {
+                        life.classList.add('lost');
+                    }
+                });
+
+                // Update blackjack lives
+                const blackjackLives = virtualBlackjack.querySelectorAll('.life');
+                blackjackLives.forEach((life, index) => {
+                    if (index < gameLives.blackjack) {
+                        life.classList.remove('lost');
+                    } else {
+                        life.classList.add('lost');
+                    }
+                });
+
+                // Update poker lives
+                const pokerLives = virtualPoker.querySelectorAll('.life');
+                pokerLives.forEach((life, index) => {
+                    if (index < gameLives.poker) {
+                        life.classList.remove('lost');
+                    } else {
+                        life.classList.add('lost');
+                    }
+                });
+            }
+
+            // Start Aviator game with random multiplier between 1.00 and 100.00
             function startAviatorGame() {
                 if (aviatorGameActive) return;
                 
@@ -1329,18 +1501,18 @@
                     currentMultiplier += increase;
                     multiplier.textContent = currentMultiplier.toFixed(2) + 'x';
                     
-                    // Move plane up with flying animation
-                    const translateY = Math.min((currentMultiplier - 1) * 6, 100);
+                    // Move plane up with flying animation - up to 100x
+                    const translateY = Math.min((currentMultiplier - 1) * 1.5, 150);
                     const translateX = Math.sin(currentMultiplier * 0.5) * 20; // Side-to-side movement
                     plane.style.transform = `translateY(-${translateY}%) translateX(${translateX}px)`;
                     
                     // Auto cash out if enabled
-                    if (autoCashOutMultiplier > 0 && currentMultiplier >= autoCashOutMultiplier) {
+                    if (autoCashEnabled && autoCashOutMultiplier > 0 && currentMultiplier >= autoCashOutMultiplier) {
                         endAviatorGame(true);
                     }
                     
-                    // Random crash point between 1.2x and 101x
-                    const crashPoint = 1.2 + Math.random() * 99.8;
+                    // Random crash point between 1.2x and 100x
+                    const crashPoint = 1.2 + Math.random() * 98.8;
                     
                     if (currentMultiplier >= crashPoint) {
                         endAviatorGame(false);
@@ -1404,11 +1576,17 @@
                 
                 currentBet = 0;
                 
-                // Wait 5 seconds before starting a new game
-                if (!aviatorGameActive) {
+                // Auto bet if enabled
+                if (autoBetEnabled && !aviatorGameActive) {
                     setTimeout(() => {
-                        if (!aviatorGameActive) {
-                            startAutoAviator();
+                        if (autoBetEnabled && !aviatorGameActive) {
+                            const betAmount = parseFloat(aviatorBet.value) || 0;
+                            if (betAmount >= 50 && betAmount <= 10000 && betAmount <= userBalance) {
+                                userBalance -= betAmount;
+                                updateBalance();
+                                currentBet = betAmount;
+                                startAviatorGame();
+                            }
                         }
                     }, 5000);
                 }
@@ -1424,8 +1602,8 @@
                     const increase = 0.01 + (Math.random() * 0.04);
                     autoMultiplier += increase;
                     
-                    // Random crash point between 1.2x and 101x
-                    const crashPoint = 1.2 + Math.random() * 99.8;
+                    // Random crash point between 1.2x and 100x
+                    const crashPoint = 1.2 + Math.random() * 98.8;
                     
                     if (autoMultiplier >= crashPoint) {
                         clearInterval(autoInterval);
@@ -1653,6 +1831,34 @@
                     autoCashOutBtn.textContent = 'Auto: 2x';
                 }
             });
+
+            // Auto bet toggle
+            autoBetOn.addEventListener('click', function() {
+                autoBetEnabled = !autoBetEnabled;
+                if (autoBetEnabled) {
+                    this.classList.add('active');
+                    this.textContent = 'Auto Bet: ON';
+                    showToast('Auto Bet enabled');
+                } else {
+                    this.classList.remove('active');
+                    this.textContent = 'Auto Bet: OFF';
+                    showToast('Auto Bet disabled');
+                }
+            });
+
+            // Auto cash toggle
+            autoCashOn.addEventListener('click', function() {
+                autoCashEnabled = !autoCashEnabled;
+                if (autoCashEnabled) {
+                    this.classList.add('active');
+                    this.textContent = 'Auto Cash: ON';
+                    showToast('Auto Cash enabled');
+                } else {
+                    this.classList.remove('active');
+                    this.textContent = 'Auto Cash: OFF';
+                    showToast('Auto Cash disabled');
+                }
+            });
             
             function updateBetHistory() {
                 betHistoryEl.innerHTML = '';
@@ -1682,7 +1888,28 @@
                     showToast('Please login to play virtual games', true);
                     return;
                 }
-                showToast('Lucky Slots game is loading...');
+                
+                if (gameLives.slot > 0) {
+                    gameLives.slot--;
+                    updateGameLives();
+                    
+                    // Simulate game outcome
+                    const win = Math.random() > 0.6;
+                    if (win) {
+                        const winAmount = Math.floor(Math.random() * 500) + 100;
+                        userBalance += winAmount;
+                        updateBalance();
+                        showToast(`Congratulations! You won KSh ${winAmount} on Lucky Slots!`);
+                    } else {
+                        showToast('Better luck next time on Lucky Slots!');
+                    }
+                    
+                    if (gameLives.slot === 0) {
+                        showToast('You\'ve used all your Lucky Slots lives! Lives will reset in 24 hours.');
+                    }
+                } else {
+                    showToast('No lives remaining for Lucky Slots!', true);
+                }
             });
 
             virtualRoulette.addEventListener('click', function() {
@@ -1690,7 +1917,28 @@
                     showToast('Please login to play virtual games', true);
                     return;
                 }
-                showToast('Roulette game is loading...');
+                
+                if (gameLives.roulette > 0) {
+                    gameLives.roulette--;
+                    updateGameLives();
+                    
+                    // Simulate game outcome
+                    const win = Math.random() > 0.7;
+                    if (win) {
+                        const winAmount = Math.floor(Math.random() * 800) + 200;
+                        userBalance += winAmount;
+                        updateBalance();
+                        showToast(`Congratulations! You won KSh ${winAmount} on Roulette!`);
+                    } else {
+                        showToast('Better luck next time on Roulette!');
+                    }
+                    
+                    if (gameLives.roulette === 0) {
+                        showToast('You\'ve used all your Roulette lives! Lives will reset in 24 hours.');
+                    }
+                } else {
+                    showToast('No lives remaining for Roulette!', true);
+                }
             });
 
             virtualBlackjack.addEventListener('click', function() {
@@ -1698,7 +1946,28 @@
                     showToast('Please login to play virtual games', true);
                     return;
                 }
-                showToast('Blackjack game is loading...');
+                
+                if (gameLives.blackjack > 0) {
+                    gameLives.blackjack--;
+                    updateGameLives();
+                    
+                    // Simulate game outcome
+                    const win = Math.random() > 0.65;
+                    if (win) {
+                        const winAmount = Math.floor(Math.random() * 600) + 150;
+                        userBalance += winAmount;
+                        updateBalance();
+                        showToast(`Congratulations! You won KSh ${winAmount} on Blackjack!`);
+                    } else {
+                        showToast('Better luck next time on Blackjack!');
+                    }
+                    
+                    if (gameLives.blackjack === 0) {
+                        showToast('You\'ve used all your Blackjack lives! Lives will reset in 24 hours.');
+                    }
+                } else {
+                    showToast('No lives remaining for Blackjack!', true);
+                }
             });
 
             virtualPoker.addEventListener('click', function() {
@@ -1706,7 +1975,28 @@
                     showToast('Please login to play virtual games', true);
                     return;
                 }
-                showToast('Video Poker game is loading...');
+                
+                if (gameLives.poker > 0) {
+                    gameLives.poker--;
+                    updateGameLives();
+                    
+                    // Simulate game outcome
+                    const win = Math.random() > 0.75;
+                    if (win) {
+                        const winAmount = Math.floor(Math.random() * 1000) + 300;
+                        userBalance += winAmount;
+                        updateBalance();
+                        showToast(`Congratulations! You won KSh ${winAmount} on Video Poker!`);
+                    } else {
+                        showToast('Better luck next time on Video Poker!');
+                    }
+                    
+                    if (gameLives.poker === 0) {
+                        showToast('You\'ve used all your Video Poker lives! Lives will reset in 24 hours.');
+                    }
+                } else {
+                    showToast('No lives remaining for Video Poker!', true);
+                }
             });
 
             // Bet slip functionality
@@ -1846,6 +2136,7 @@
 
             // Initialize features
             updateOtherPlayersWins();
+            updateGameLives();
             startAutoAviator();
         });
     </script>
